@@ -1,0 +1,531 @@
+
+<div style="max-height: calc(100vh - 100px); overflow-y: auto;">
+  <div class="container">
+    <div class="tab">
+      <div class="left-section">
+      <h1><a routerLink="/leads">< CG ProtectForm</a></h1>
+      </div>
+   
+    <div class="right-section">
+    <!-- <div class="img"> -->
+      <img src="../assets/images/share.jpg" width="30px" height="30px">
+      <img src="../assets/images/blankIMG.png" width="32px" height="32px">
+      <img src="../assets/images/whats.png" width="32px" height="32px">
+    <!-- </div> -->
+    </div>
+  </div>
+</div>
+  
+</div>
+
+
+<form  [formGroup]="Multiform" (ngSubmit)="handleSubmit()" style="border-radius:10px; height: 80px;" >
+
+  <mat-stepper [linear]="isLinear" labelPosition="bottom" #stepper class="custom-stepper"  >
+
+    <mat-step [stepControl]="Basicform"   >
+      <ng-template matStepLabel>
+        <span class="step-label">PERSONAL DETAILS</span> 
+      </ng-template>
+
+      <!-- <div style="position: relative;"> -->
+        <!-- <div style="overflow-y: auto; max-height: calc(100vh - 164px); padding-bottom: 80px;"> -->
+          <!-- <div formGroupName="basic" > -->
+      <div formGroupName="basic" style="min-height: calc(100vh - 64px); padding-bottom: 80px;">
+        <table>
+          <tr>
+            <td>
+              <mat-label>First Name</mat-label>
+              <br/>
+              <input matInput placeholder="enter firstname" formControlName="firstname" required pattern="[A-Za-z]+" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('basic.firstname')">
+              <br>
+              <span class="error-message" *ngIf="isInvalid('basic.firstname')">Invalid First Name</span>
+            </td>
+            <td></td>
+            <!-- <td></td> -->
+            <td>
+              <mat-label>Last Name</mat-label>
+              <br/>
+              <input matInput placeholder="enter lastname" formControlName="lastname" required pattern="[A-Za-z]+" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('basic.lastname')">
+              <br>
+              <span class="error-message" *ngIf="isInvalid('basic.lastname')">Invalid Last Name</span>
+            </td>
+          </tr>
+          <br>
+          <tr>
+            <td>
+              <mat-label>Phone Number</mat-label>
+              <br>
+              <input matInput placeholder="enter valid phonenumber" formControlName="phone" required pattern="[0-9]{10}" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('basic.phone')">
+              <br>
+              <span class="error-message" *ngIf="isInvalid('basic.phone')">Invalid Phone Number</span>
+            </td>
+            <td></td>
+            <!-- <td></td> -->
+            <td>
+              <mat-label>Email</mat-label>
+              <br>
+              <input matInput placeholder="abc@xyz.com" formControlName="email" pattern="[a-zA-Z0-9]+@+[a-zA-Z]+.com" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('basic.email')">
+              <br>
+              <span class="error-message" *ngIf="isInvalid('basic.email')">Invalid Email</span>
+            </td>
+          </tr>
+          <br>
+          <tr>
+
+            <td>
+              <mat-label>DOB</mat-label>
+              <br/>
+              <input matInput placeholder="dob" formControlName="dob" [matDatepicker]="dobDatepicker" max="{{ getDate() }}" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('basic.dob')">
+              <mat-datepicker-toggle matSuffix [for]="dobDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #dobDatepicker></mat-datepicker>
+              <br>
+              <span class="error-message" *ngIf="isInvalid('basic.dob')">Invalid DOB</span>
+            </td>
+            <td></td>
+            
+            <td>
+              <mat-label>Pincode</mat-label>
+              <br>
+              <input matInput placeholder="enter pincode" formControlName="pincode" pattern="[0-9]{6}" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('basic.pincode')">
+              <br>
+              <span class="error-message" *ngIf="isInvalid('basic.pincode')">Invalid Pincode</span>
+            </td>
+          </tr>
+          <br>
+          <tr>
+            <td>
+              <mat-label>Gender</mat-label>
+              <br>
+              <mat-radio-group formControlName="gender" color="primary" [(ngModel)]="selectedOption" >
+                <mat-radio-button value="male">Male</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <mat-radio-button value="female">Female</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <mat-radio-button value="transgender">Transgender</mat-radio-button>
+              </mat-radio-group>      
+            
+          </td>
+          </tr>
+          <br>
+         
+          <tr>
+            <td>
+                <mat-label>Do You Smoke?</mat-label>
+                <br>
+                <mat-button-toggle-group formControlName="smoke"  class="smoke-toggle-group">
+                  <mat-button-toggle value="yes" class="smoke-toggle-button" style="border-radius: 8px;">Yes</mat-button-toggle>
+                  <mat-button-toggle value="no" class="smoke-toggle-button" style="border-radius: 8px;">No</mat-button-toggle>
+                </mat-button-toggle-group>
+               <br>
+
+            </td>
+            <td></td>
+            <td>
+               <mat-label>Do You Consume Alcohol?</mat-label>
+               <br/>
+               <mat-button-toggle-group formControlName="alcohol" class="alcohol-toggle-group">
+                
+                <mat-button-toggle value="yes" class="alcohol-toggle-button" style="border-radius: 8px;">Yes</mat-button-toggle>
+                <mat-button-toggle value="no" class="alcohol-toggle-button"  style="border-radius: 8px;">No</mat-button-toggle>
+              </mat-button-toggle-group>
+
+            </td>
+
+          </tr>
+          <br>
+
+          <tr>
+        
+              <mat-label>Address</mat-label>
+              <br/>
+              <textarea matInput placeholder="Enter address" formControlName="address" style="width: 400px; height: 100px;"></textarea>
+      
+          </tr>
+          <br>
+          
+          <tr>
+            <td>
+              <mat-label>Add Dependents</mat-label>
+              <br/>
+              <mat-button-toggle-group formControlName="dependents" appearance="legacy">
+                <mat-button-toggle value="spouse">
+                  <img src="../assets/images/spouse.png" alt="Spouse" width="50" height="50">
+                  <br/>
+                  Spouse
+                </mat-button-toggle>
+                <mat-button-toggle value="mother">
+                  <img src="../assets/images/mother.png" alt="Mother" width="50" height="50">
+                  <br/>
+                  Mother
+                </mat-button-toggle>
+                <mat-button-toggle value="father">
+                  <img src="../assets/images/father.png" alt="Father" width="50" height="50">
+                  <br/>
+                  Father
+                </mat-button-toggle>
+                <mat-button-toggle value="child">
+                  <img src="../assets/images/child.png" alt="Child" width="50" height="50">
+                  <br/>
+                  Child
+                </mat-button-toggle>
+                <mat-button-toggle value="other">
+                  <img src="../assets/images/other.png" alt="Other" width="50" height="50">
+                  <br/>
+                  Other
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+         
+          </tr>
+          
+        </table>  
+          </div>
+   
+    
+        
+      <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
+        <div style="display: flex; justify-content: space-between; padding: 16px;">
+          <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" [disabled]="true">Back</button>
+          <button mat-raised-button color="primary" matStepperNext style="background-color: blue; color: white; margin-left: auto;">Next</button>
+        </div>    
+      </div>
+
+
+   </mat-step>
+  
+    
+    <mat-step [stepControl]="incomeForm" >
+      <ng-template matStepLabel>
+        <span class="step-label">INCOME DETAILS</span> 
+      </ng-template>
+
+      <div formGroupName="income" style="min-height: calc(100vh - 64px); padding-bottom: 80px;">
+        <table>
+          <tr>
+            <td>
+              <mat-label>Annual Date</mat-label>
+              <br>
+              <input matInput placeholder="enter date" formControlName="annualDate" [matDatepicker]="annualDatepicker" max="{{ getDate() }}" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('income.annualDate')">
+              <mat-datepicker-toggle matSuffix [for]="annualDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #annualDatepicker></mat-datepicker>
+              <br>
+              <span class="error-message" *ngIf="isInvalid('income.annualDate')">Invalid Date</span>
+            </td> 
+          </tr>
+         <br>
+          <tr>
+            <mat-label>Government Rebate</mat-label>
+            <br>
+            <input matInput formControlName="rebate" placeholder="$ 000000" style="border-radius: 8px; width: 250px;" pattern="$+[0-9]{0,6}" [class.error]="isInvalid('income.rebate')" >
+            <br>
+            <span class="error-message" *ngIf="isInvalid('income.rebate')">Invalid Value</span>
+          </tr>
+         <br>
+          <tr>
+            <mat-label>Tax Rebate</mat-label>
+            <br>
+            <input matInput formControlName="tax" placeholder="$ 0000" style="border-radius: 8px; width: 250px;" pattern="$+[0-9]{0,4}" [class.error]="isInvalid('income.tax')" >
+            <br>
+            <span class="error-message" *ngIf="isInvalid('income.tax')">Invalid Value</span>
+          </tr>
+    
+        </table>
+      </div>
+       
+        <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
+          <div style="display: flex; justify-content: space-between; padding: 16px;">
+            <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" >Back</button>
+            <button mat-raised-button color="primary" matStepperNext style="background-color: blue; color: white; margin-left: auto;">Next</button>
+          </div>    
+        </div>
+               
+   
+    </mat-step>
+
+  <mat-step [stepControl]="documentForm">
+
+    <ng-template matStepLabel>
+      <span class="step-label">DOCUMENTS</span> 
+    </ng-template>
+
+    <div formGroupName="document" style="min-height: calc(100vh - 64px); padding-bottom: 80px;">
+      <table>
+        <tr>
+          <td>
+
+          Upload Identity Proof
+            
+          <div class="upload-container">
+         
+          <label for="identity-proof-input" class="upload-icon">
+            <img src="../assets/images/uploadIMG.png" alt="Identity Proof Icon">
+            <input id="identity-proof-input" type="file"  (change)="onIdentityProofSelected($event)">
+          </label>
+          <div class="progress-bar">
+            <div class="progress">
+              <div class="file-info">{{ identityProofFileName }}</div>
+              <div class="progress-content">
+                <span class="percentage">{{ identityProofProgress }}%</span>
+                <span class="time">{{ identityProofTimeRemaining }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+         </td>
+         <br>
+
+        <td>   
+          Upload Financial Proof                
+         <div class="upload-container">
+          
+          <label for="financial-proof-input" class="upload-icon">
+            <img src="../assets/images/uploadIMG.png" alt="Financial Proof Icon">
+            <input id="financial-proof-input" type="file" accept="image/*"  (change)="onFinancialProofSelected($event)">
+          </label>
+          <div class="progress-bar">
+            <div class="progress">
+              <div class="file-info">{{ financialProofFileName }}</div>
+              <div class="progress-content">
+                <span class="percentage">{{ financialProofProgress }}%</span>
+                <span class="time">{{ financialProofTimeRemaining }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+          </td>
+        </tr>
+      </table> 
+    </div>
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
+      <div style="display: flex; justify-content: space-between; padding: 16px;">
+        <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" >Back</button>
+        <button mat-raised-button color="primary" matStepperNext style="background-color: blue; color: white; margin-left: auto;">Next</button>
+      </div>    
+    </div>
+    </mat-step> 
+
+    <mat-step [stepControl]="quotationForm">
+      <ng-template matStepLabel>
+        <span class="step-label">QUOTATION</span> 
+      </ng-template>
+      <div formGroupName="quotation" style="min-height: calc(100vh - 64px); padding-bottom: 80px;" >
+        <div style="background-color: whitesmoke;padding-left: 20px; ">   
+          <i class="fa-solid fa-chevron-left" style="display: inline-block;margin-right: 12px;"></i>
+          <div style="width:950px; height:270px;border-radius:15px;margin-top: 15px; background-color: white;">
+      
+             <div class="row" style="margin-left: 10px;">
+      
+              <div class="col">
+                <p>Quotation Reference</p>
+                <h5>GRH/3345</h5>
+      
+              </div>
+      
+              <div class="col-2" style="margin-right: 200px;">
+      
+                <p>Premium</p>
+      
+                <h5>$70 per week</h5>
+      
+              </div>
+      
+      
+              <hr style="width: 97%;">
+      
+            </div><br />
+      
+            <div class="row" style="margin-left: 10px;">
+      
+              <div class="col">
+      
+                <p>Product</p>
+      
+                <h5>CG Protect</h5>
+      
+              </div>
+      
+              <div class="col-2"  style="margin-right: 200px;">
+      
+                <p>Sum insured upto</p>
+      
+                <h5>$200,000</h5>
+      
+              </div>
+      
+            </div><br />
+      
+            <div class="row" style="margin-left: 10px;">
+      
+              <div class="col">
+      
+                <button type="button" style="color:black;background-color:white;border: 1px solid black;">VIEW
+      
+                  BENIFITS</button>
+      
+              </div>
+      
+              <div class="col-2"  style="margin-right: 200px;">
+      
+                  <img src="../assets/images/share.jpg" width="30px" height="30px">
+                  <img src="../assets/images/blankIMG.png" width="32px" height="32px">
+                  <img src="../assets/images/whats.png" width="32px" height="32px">
+              <!-- <mat-icon>share</mat-icon> -->
+               </div>
+             </div>
+             </div>
+
+             <div style="background-color: whitesmoke; padding: 20px; margin-top: 20px;">
+              <h4>Previous Step Details</h4>
+              <p>First Name: {{ Basicform.value?.basic?.firstname }}</p>
+              <p>Last Name: {{ Basicform.value?.basic?.lastname }}</p>
+              <p>Date of Birth: {{ Basicform.value?.basic?.dob | date }}</p>
+              <p>Address: {{ Basicform.value?.basic?.address }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
+          <div style="display: flex; justify-content: space-between; padding: 16px;">
+            <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" >Back</button>
+            <button type="text" matStepperNext style="margin-left: auto; background-color: #5493ec;  color: black;"><a routerLink="/paymentLink"> Send Payment Link</a></button>
+          </div>
+        </div>
+              
+
+    </mat-step> 
+    
+  </mat-stepper>
+</form>
+
+
+
+
+    <!--
+      <div style="background-color: whitesmoke;padding-left: 20px; height: 750px;">
+       
+        <i class="fa-solid fa-chevron-left" style="display: inline-block;margin-right: 12px;"></i>
+
+        <h2 style="margin-top: 30px;display: inline-block; ">Quotation Summary</h2>
+
+        <div style="width:1000px; height:270px;border-radius:15px;margin-top: 15px; background-color: white;">
+
+          <div class="row" style="margin-left: 10px;">
+
+            <div class="col">
+
+              <p>Quotation Reference</p>
+
+              <h2>GRH/3345</h2>
+
+            </div>
+
+            <div class="col-2">
+
+              <p>Premium</p>
+
+              <h2>$70 per week</h2>
+
+            </div>
+
+
+            <hr style="width: 97%;">
+
+          </div><br />
+
+          <div class="row" style="margin-left: 10px;">
+
+            <div class="col">
+
+              <p>Product</p>
+
+              <h2>CG Protect</h2>
+
+            </div>
+
+            <div class="col-2">
+
+              <p>Sum insured upto</p>
+
+              <h2>$200,000</h2>
+
+            </div>
+
+          </div><br />
+
+          <div class="row" style="margin-left: 10px;">
+
+            <div class="col">
+
+              <button type="button" style="color:black;background-color:white;border: 1px solid black;">VIEW
+
+                BENIFITS</button>
+
+            </div>
+
+            <div class="col-2">
+            <mat-icon>share</mat-icon>
+           <div style="margin-top: -30px;margin-left: 50px">
+           <i class="fa-brands fa-square-whatsapp fa-2xl" style="color:rgba(21,206,31,255);"></i>
+
+            </div>
+           </div>
+           </div>
+           </div>
+      </div>
+   </mat-step> -->
+
+
+
+
+<!--     
+     <mat-step [stepControl]="documentForm">
+      <ng-template matStepLabel>
+        <span style="background-color: rgb(12, 121, 43); color: white;">DOCUMENTS</span>
+      </ng-template>
+
+      <div formGroupName="documentForm">
+        <mat-form-field>
+          <mat-label>Upload Document</mat-label>
+          <input type="file" formControlName="documentForm" (change)="handleFileInput($event)">
+        </mat-form-field>
+
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+          <button mat-raised-button color="warn" matStepperPrevious>Back</button>
+        </div>
+      </div>
+    </mat-step>
+     Step 4: Quotation 
+    <mat-step [stepControl]="quotationForm">
+      <ng-template matStepLabel>
+        <span style="background-color: rgb(12, 121, 43); color: white;">QUOTATION</span>
+      </ng-template>
+      <div formGroupName="quotation">
+        <p>Application Details information will populate from slide 14, 15, and 16</p>
+        <p>File Upload on Server and Update database with filename</p>
+        <div>
+          <button mat-raised-button color="primary" type="submit">Send Payment Link</button>
+          <button mat-raised-button color="warn" matStepperPrevious>Back</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form> -->
+
+
+<style>
+  .step-label {
+    color: white; 
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+    
