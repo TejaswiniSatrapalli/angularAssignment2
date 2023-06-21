@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { MatDatepicker } from '@angular/material/datepicker';
-
-
 
 @Component({
   selector: 'app-multiform',
@@ -11,66 +9,48 @@ import { MatDatepicker } from '@angular/material/datepicker';
   styleUrls: ['./multiform.component.css']
 })
 export class MultiformComponent implements OnInit {
-  
-  
-
   dobDatePicker: any;
   annualDatePicker: any;
-
-  selectedOption: string;
-
+  // selectedOption!: string ;
   fileName: string = 'No file chosen';
   fileProgress: number = 0;
-  timeRemaining :string='';
-  
-  identityProofFileName: string = '';
-  identityProofProgress: number = 0;
-  identityProofTimeRemaining: string = '';
-
+  timeRemaining: string = '';
+  idProofFileName: string = '';
+  idProofProgress: number = 0;
+  idProofTimeRemaining: string = '';
   financialProofFileName: string = '';
   financialProofProgress: number = 0;
   financialProofTimeRemaining: string = '';
- 
 
-  constructor(private builder: FormBuilder) {
-    this.selectedOption = '';
-    
-  }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
 
   isLinear = true;
 
-  Multiform = this.builder.group({
-    basic: this.builder.group({
+  Multiform: FormGroup = this.formBuilder.group({
+    basic: this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       phone: ['', Validators.required],
-      email:['',Validators.required], 
-      dob:['',Validators.required],
-      pincode:['',Validators.required],
-      smoke:[''],
-      alcohol:[''],
-      address:[''],
-      dependents:[''],
+      email: ['', Validators.required],
+      dob: ['', Validators.required],
+      pincode: ['', Validators.required],
+      gender:[''],
+      smoking: [''],
+      drinking: [''],
+      address: [''],
+      dependent: [''],
     }),
-
-    income: this.builder.group({
-      annualDate: ['', Validators.required],
-      rebate: ['', Validators.required],
-      tax:['', Validators.required]
-
+    income: this.formBuilder.group({
+      annualIncome: ['', Validators.required],
+      govRebate: ['', Validators.required],
+      tax: ['', Validators.required],
     }),
-    document: this.builder.group({
-
-      // identityProof: ['', Validators.required],
-      // financialProof: ['', Validators.required]
-
-    }),
-    quotation: this.builder.group({
-      // tax:['', Validators.required]
+    document: this.formBuilder.group({}),
+    idProof:[''],
+    financialProof:[''],
 
 
-      // Add necessary quotation form fields here
-    })
+    quotation: this.formBuilder.group({}),
   });
 
   get Basicform() {
@@ -88,42 +68,38 @@ export class MultiformComponent implements OnInit {
   get quotationForm() {
     return this.Multiform.get('quotation') as FormGroup;
   }
-  
 
-    onSmokeToggleChange(event: MatButtonToggleChange) {
-      console.log(event.value);
-    }
+  onSmokeToggleChange(event: MatButtonToggleChange) {
+    console.log(event.value);
+  }
 
-    onAlcoholToggleChange(event: MatButtonToggleChange) {
-      console.log(event.value);
-    }
+  onAlcoholToggleChange(event: MatButtonToggleChange) {
+    console.log(event.value);
+  }
 
-    
-  
   isInvalid(controlName: string): boolean {
     const control = this.Multiform.get(controlName);
     return control !== null && control.invalid && (control.dirty || control.touched);
   }
+
   getDate(): string {
     const currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() -1 ); // Subtract 1 day from the current date
+    currentDate.setDate(currentDate.getDate() - 1); // Subtract 1 day from the current date
     const year = currentDate.getFullYear();
     const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
     const day = ('0' + currentDate.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
 
-
-
-  onIdentityProofSelected(event: any) {
+  onIdProofSelected(event: any) {
     const file: File = event.target.files[0];
-    this.identityProofFileName = file.name;
+    this.idProofFileName = file.name;
 
     let progress = 0;
     const interval = setInterval(() => {
       progress += 10;
-      this.identityProofProgress = progress;
-      this.identityProofTimeRemaining = this.calculateTimeRemaining(progress);
+      this.idProofProgress = progress;
+      this.idProofTimeRemaining = this.calculateTimeRemaining(progress);
       if (progress >= 100) {
         clearInterval(interval);
       }
@@ -146,20 +122,86 @@ export class MultiformComponent implements OnInit {
   }
 
   calculateTimeRemaining(progress: number): string {
-    const timeRemaining = Math.floor((100 - progress) / 10) * 5; 
+    const timeRemaining = Math.floor((100 - progress) / 10) * 5;
     return `${timeRemaining} seconds`;
   }
 
-  handleSubmit() {
-    if (this.Multiform.valid) {
-      console.log(this.Multiform.value);
+  
+    handleSubmit() {
+
+
+      if (this.Multiform.valid) {
+        const basicForm = this.Multiform.get('basic');
+        const incomeForm = this.Multiform.get('income');
+    
+        if (basicForm && incomeForm) {
+          const Multiform = {
+            basic: basicForm.value,
+            income: incomeForm.value,
+          };
+  
+          console.log(Multiform);
+    
+        this.http.post('http://localhost:9090/leads/add',Multiform).subscribe(
+          response => {
+            console.log('Form data submitted successfully');
+          },
+          error => {
+            console.error('error', error);
+          }
+        );
+      
+        }
+      }
     }
-  }
+    
+    ngOnInit(): void {}
+    }
+    
+      // if (this.Multiform.valid) {
+      //   const FormData = {
+      //     basic: this.Multiform.get('basic')?.value,
+      //     income: this.Multiform.get('income')?.value,
+      //   };
+
+      // }
+  
+      //     this.http.post('http://localhost:9090/leads', FormData).subscribe(
+      //       (response) => {
+      //         console.log(response);
+      //         // Handle successful response
+      //       },
+      //       (error) => {
+      //         console.error('Error saving data:',error);
+      //         // Handle error
+      //       }
+      //     );
+      //   }
+  
 
   
-  ngOnInit(): void {}
-}
+//   handleSubmit() {
+//     if (this.Multiform.valid) {
+//       const formData = {
+//         basic: this.Multiform.get('basic')?.value,
+//         income: this.Multiform.get('income')?.value,
+//       };
 
+//       this.http.post('http://localhost:9090/submit-form', formData).subscribe(
+//         (response) => {
+//           console.log(response);
+//           // Handle successful response
+//         },
+//         (error) => {
+//           console.error(error);
+//           // Handle error
+//         }
+//       );
+//     }
+//   }
+
+//   ngOnInit(): void {}
+// }
 
 
 

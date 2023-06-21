@@ -1,27 +1,28 @@
-export class LeadDTO {
+export class Multiform {
 
+    
     firstName:string;
 	lastName:string;
     phoneNumber :string;
 	email:string;
-	dob:number;
+	dob:Date;
 	pincode:number;
 	gender :string;
-	smoking:string;
-	drinking:string;
+	smoker:string;
+	alcoholic:string;
 	address:string;
 	dependant:string;
-	annualIncome:number;
+	annualIncome:Date;
 	govRebate:string;
 	taxRebate:string;
 	idProof:string;
 	financialProof:string;
 	// quotationRef:string;
-	// premium:string;
-	// product:string;
-	// // sum:number;
-	// leadStage:string;
-	// contacted:string;
+	premium:string;
+	product:string;
+	// sum:number;
+	leadStage:string;
+	contacted:string;
 
 
 	constructor(
@@ -29,24 +30,24 @@ export class LeadDTO {
 	lastName:string,
 	phoneNumber :string,
 	email:string,
-	dob:number,
+	dob:Date,
 	pincode:number,
-	gender:string,
-	smoking:string,
-	drinking:string,
+	gender :string,
+	smoker:string,
+	alcoholic:string,
 	address:string,
 	dependant:string,
-	annualIncome:number,
+	annualIncome:Date,
 	govRebate:string,
 	taxRebate:string,
 	idProof:string,
 	financialProof:string,
 	// quotationRef:string,
-	// premium:string,
-	// product:string,
-	// sum:number,
-	// leadStage:string,
-	// contacted:string
+	premium:string,
+	product:string,
+	sum:number,
+	leadStage:string,
+	contacted:string
 	){
 
 		this.firstName=firstName;
@@ -56,8 +57,8 @@ export class LeadDTO {
 		this.dob=dob;
 		this.pincode=pincode;
 		this.gender=gender;
-		this.smoking=smoking;
-		this.drinking=drinking;
+		this.smoker=smoker;
+		this.alcoholic=alcoholic;
 		this.address=address;
 		this.dependant=dependant;
 		this.annualIncome=annualIncome;
@@ -65,12 +66,13 @@ export class LeadDTO {
 		this.taxRebate=taxRebate;
 		this.idProof=idProof;
 		this.financialProof=financialProof;
-		// this.premium=premium;
-		// this.product=product;
-		// // this.sum=sum;
-		// this.leadStage=leadStage;
-		// this.contacted=contacted;
+		this.premium=premium;
+		this.product=product;
+		// this.sum=sum;
+		this.leadStage=leadStage;
+		this.contacted=contacted;
 
 		}
+
 
 }

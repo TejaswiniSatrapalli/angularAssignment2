@@ -10,10 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 
 import { QualifiedComponent } from './qualified/qualified.component';
-import { ExpiredComponent } from './expired/expired.component';
-import { InterestedComponent } from './interested/interested.component';
-import { RenewalComponent } from './renewal/renewal.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
 import { MainComponent } from './main/main.component';
 
 
@@ -68,11 +65,9 @@ const allLinks:Routes = [
   
     HeaderComponent,
     SidenavComponent,
-    DashboardComponent,
+ 
     QualifiedComponent,
-    ExpiredComponent,
-    InterestedComponent,
-    RenewalComponent,
+
     MainComponent,
     MultiformComponent,
     QuotationFormComponent,

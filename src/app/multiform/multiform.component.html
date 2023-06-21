@@ -27,11 +27,7 @@
       <ng-template matStepLabel>
         <span class="step-label">PERSONAL DETAILS</span> 
       </ng-template>
-
-      <!-- <div style="position: relative;"> -->
-        <!-- <div style="overflow-y: auto; max-height: calc(100vh - 164px); padding-bottom: 80px;"> -->
-          <!-- <div formGroupName="basic" > -->
-      <div formGroupName="basic" style="min-height: calc(100vh - 64px); padding-bottom: 80px;">
+       <div formGroupName="basic" style="min-height: calc(100vh - 64px); padding-bottom: 80px;">
         <table>
           <tr>
             <td>
@@ -97,7 +93,7 @@
             <td>
               <mat-label>Gender</mat-label>
               <br>
-              <mat-radio-group formControlName="gender" color="primary" [(ngModel)]="selectedOption" >
+              <mat-radio-group formControlName="gender" color="primary">
                 <mat-radio-button value="male">Male</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <mat-radio-button value="female">Female</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <mat-radio-button value="transgender">Transgender</mat-radio-button>
@@ -111,7 +107,7 @@
             <td>
                 <mat-label>Do You Smoke?</mat-label>
                 <br>
-                <mat-button-toggle-group formControlName="smoke"  class="smoke-toggle-group">
+                <mat-button-toggle-group formControlName="smoking"  class="smoke-toggle-group">
                   <mat-button-toggle value="yes" class="smoke-toggle-button" style="border-radius: 8px;">Yes</mat-button-toggle>
                   <mat-button-toggle value="no" class="smoke-toggle-button" style="border-radius: 8px;">No</mat-button-toggle>
                 </mat-button-toggle-group>
@@ -122,7 +118,7 @@
             <td>
                <mat-label>Do You Consume Alcohol?</mat-label>
                <br/>
-               <mat-button-toggle-group formControlName="alcohol" class="alcohol-toggle-group">
+               <mat-button-toggle-group formControlName="drinking" class="alcohol-toggle-group">
                 
                 <mat-button-toggle value="yes" class="alcohol-toggle-button" style="border-radius: 8px;">Yes</mat-button-toggle>
                 <mat-button-toggle value="no" class="alcohol-toggle-button"  style="border-radius: 8px;">No</mat-button-toggle>
@@ -146,7 +142,7 @@
             <td>
               <mat-label>Add Dependents</mat-label>
               <br/>
-              <mat-button-toggle-group formControlName="dependents" appearance="legacy">
+              <mat-button-toggle-group formControlName="dependent" appearance="legacy">
                 <mat-button-toggle value="spouse">
                   <img src="../assets/images/spouse.png" alt="Spouse" width="50" height="50">
                   <br/>
@@ -183,8 +179,8 @@
         
       <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
         <div style="display: flex; justify-content: space-between; padding: 16px;">
-          <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" [disabled]="true">Back</button>
-          <button mat-raised-button color="primary" matStepperNext style="background-color: blue; color: white; margin-left: auto;">Next</button>
+          <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(246, 248, 250); color: black; margin-left: 150px;" [disabled]="true">Back</button>
+          <button type="update" mat-raised-button color="primary" matStepperNext style="background-color: rgb(88, 136, 179); color: white; margin-left: auto;">Next</button>
         </div>    
       </div>
 
@@ -203,7 +199,7 @@
             <td>
               <mat-label>Annual Date</mat-label>
               <br>
-              <input matInput placeholder="enter date" formControlName="annualDate" [matDatepicker]="annualDatepicker" max="{{ getDate() }}" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('income.annualDate')">
+              <input matInput placeholder="enter date" formControlName="annualIncome" [matDatepicker]="annualDatepicker" max="{{ getDate() }}" style="border-radius: 8px; width: 250px;" [class.error]="isInvalid('income.annualDate')">
               <mat-datepicker-toggle matSuffix [for]="annualDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #annualDatepicker></mat-datepicker>
               <br>
@@ -214,7 +210,7 @@
           <tr>
             <mat-label>Government Rebate</mat-label>
             <br>
-            <input matInput formControlName="rebate" placeholder="$ 000000" style="border-radius: 8px; width: 250px;" pattern="$+[0-9]{0,6}" [class.error]="isInvalid('income.rebate')" >
+            <input matInput formControlName="govRebate" placeholder="$ 000000" style="border-radius: 8px; width: 250px;" pattern="[0-9]{0,6}" [class.error]="isInvalid('income.rebate')" >
             <br>
             <span class="error-message" *ngIf="isInvalid('income.rebate')">Invalid Value</span>
           </tr>
@@ -222,7 +218,7 @@
           <tr>
             <mat-label>Tax Rebate</mat-label>
             <br>
-            <input matInput formControlName="tax" placeholder="$ 0000" style="border-radius: 8px; width: 250px;" pattern="$+[0-9]{0,4}" [class.error]="isInvalid('income.tax')" >
+            <input matInput formControlName="tax" placeholder="$ 0000" style="border-radius: 8px; width: 250px;" pattern="[0-9]{0,4}" [class.error]="isInvalid('income.tax')" >
             <br>
             <span class="error-message" *ngIf="isInvalid('income.tax')">Invalid Value</span>
           </tr>
@@ -232,8 +228,8 @@
        
         <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
           <div style="display: flex; justify-content: space-between; padding: 16px;">
-            <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" >Back</button>
-            <button mat-raised-button color="primary" matStepperNext style="background-color: blue; color: white; margin-left: auto;">Next</button>
+            <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(244, 246, 247); color: black; margin-left: 150px;" >Back</button>
+            <button type="update" mat-raised-button color="primary" matStepperNext style="background-color: rgb(88, 136, 179); color: white; margin-left: auto;">Next</button>
           </div>    
         </div>
                
@@ -255,16 +251,16 @@
             
           <div class="upload-container">
          
-          <label for="identity-proof-input" class="upload-icon">
-            <img src="../assets/images/uploadIMG.png" alt="Identity Proof Icon">
-            <input id="identity-proof-input" type="file"  (change)="onIdentityProofSelected($event)">
+          <label for="id-proof-input" class="upload-icon">
+            <img src="../assets/images/uploadIMG.png" alt="Id Proof Icon">
+            <input id="id-proof-input" type="file"  (change)="onIdProofSelected($event)">
           </label>
           <div class="progress-bar">
             <div class="progress">
-              <div class="file-info">{{ identityProofFileName }}</div>
+              <div class="file-info">{{ idProofFileName }}</div>
               <div class="progress-content">
-                <span class="percentage">{{ identityProofProgress }}%</span>
-                <span class="time">{{ identityProofTimeRemaining }}</span>
+                <span class="percentage">{{ idProofProgress }}%</span>
+                <span class="time">{{ idProofTimeRemaining }}</span>
               </div>
             </div>
           </div>
@@ -297,7 +293,7 @@
     <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
       <div style="display: flex; justify-content: space-between; padding: 16px;">
         <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" >Back</button>
-        <button mat-raised-button color="primary" matStepperNext style="background-color: blue; color: white; margin-left: auto;">Next</button>
+        <button type="submit" mat-raised-button color="primary" matStepperNext style="background-color: rgb(88, 136, 179); color: white; margin-left: auto;">Next</button>
       </div>    
     </div>
     </mat-step> 
@@ -367,12 +363,10 @@
                   <img src="../assets/images/share.jpg" width="30px" height="30px">
                   <img src="../assets/images/blankIMG.png" width="32px" height="32px">
                   <img src="../assets/images/whats.png" width="32px" height="32px">
-              <!-- <mat-icon>share</mat-icon> -->
                </div>
              </div>
-             </div>
-
-             <div style="background-color: whitesmoke; padding: 20px; margin-top: 20px;">
+            </div>
+            <div style="background-color: whitesmoke; padding: 20px; margin-top: 20px;">
               <h4>Previous Step Details</h4>
               <p>First Name: {{ Basicform.value?.basic?.firstname }}</p>
               <p>Last Name: {{ Basicform.value?.basic?.lastname }}</p>
@@ -385,7 +379,7 @@
         <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; border-top: 1px solid #ccc;">
           <div style="display: flex; justify-content: space-between; padding: 16px;">
             <button mat-raised-button color="primary" matStepperPrevious style="background-color: rgb(158, 155, 155); color: black; margin-left: 150px;" >Back</button>
-            <button type="text" matStepperNext style="margin-left: auto; background-color: #5493ec;  color: black;"><a routerLink="/paymentLink"> Send Payment Link</a></button>
+            <button type="text" matStepperNext style="margin-left: auto; background-color: #ecf0f5;  color: black;"><a routerLink="/paymentLink"> Send Payment Link</a></button>
           </div>
         </div>
               
@@ -394,6 +388,16 @@
     
   </mat-stepper>
 </form>
+
+
+  
+
+
+
+      <!-- <div style="position: relative;"> -->
+        <!-- <div style="overflow-y: auto; max-height: calc(100vh - 164px); padding-bottom: 80px;"> -->
+          <!-- <div formGroupName="basic" > -->
+            
 
 
 

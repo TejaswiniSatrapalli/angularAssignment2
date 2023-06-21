@@ -1,12 +1,13 @@
 
  form{
-  background-color: #4276a4;
+  background-color: #2c5171;
    margin-left:150px;
-    width:950px;
+    width:1000px;
     padding-top:0px;
     height: 90px;
     text-shadow: 0cap;
-    font-size: 13px;
+    font-size: 18px;
+    font-style: normal;
 
 }
 
@@ -14,7 +15,7 @@
 h1 {
   margin-left: 10px;
   padding-top: 100px;
-  font-size: 20px;
+  font-size: 22px;
   /* color: #121313; */
 }
 
@@ -26,7 +27,7 @@ h1 {
 
 
 .error {
-  border-color: rgb(249, 109, 109);
+  border-color: rgb(161, 3, 3);
 }
 
 
