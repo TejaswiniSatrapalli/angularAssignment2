@@ -1,0 +1,93 @@
+<div class="home-container">
+    <h2>Welcome to the Home Page!</h2>
+    <button (click)="logout()">Logout</button>
+    <div class="step-container">
+        <h2>Step 1: Amount</h2>
+        <div class="options">
+          <label>
+            <input type="radio" name="transferType" value="international" checked (change)="selectTransferType('international')"> International
+          </label>
+          <label>
+            <input type="radio" name="transferType" value="sameCurrency" (change)="selectTransferType('sameCurrency')"> Same Currency
+          </label>
+        </div>
+        <div class="fields">
+          <div *ngIf="isInternationalTransfer">
+            <div class="field">
+              <label for="fromAmount">From:</label>
+              <input type="number" id="fromAmount" name="fromAmount" [(ngModel)]="fromAmount" (input)="calculateAmount()">
+              <select [(ngModel)]="fromCurrency" (change)="calculateAmount()">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <!-- Add more currency options -->
+              </select>
+            </div>
+            <div class="field">
+              <label for="toAmount">To:</label>
+              <input type="number" id="toAmount" name="toAmount" [value]="toAmount" disabled>
+              <select [(ngModel)]="toCurrency" (change)="calculateAmount()">
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <!-- Add more currency options -->
+              </select>
+            </div>
+          </div>
+          <div *ngIf="isSameCurrencyTransfer">
+            <div class="field">
+              <label for="amount">Amount:</label>
+              <input type="number" id="amount" name="amount" [(ngModel)]="amount">
+            </div>
+            <div class="field">
+              <label for="country">Country:</label>
+              <select [(ngModel)]="country">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <!-- Add more country options -->
+              </select>
+            </div>
+          </div>
+        </div>
+        <button (click)="nextStep()" [disabled]="!isValidAmountStep()">Continue</button>
+  
+      
+      
+        <div *ngIf="currentStep === 2">
+          <!-- Recipient Details Step -->
+          <h2>Step 2: Recipient Details</h2>
+          <div>
+            <label>Recipient Name:</label>
+            <input type="text" [(ngModel)]="recipientName">
+          </div>
+          <div>
+            <label>Email:</label>
+            <input type="email" [(ngModel)]="email">
+          </div>
+          <div>
+            <label>Bank Details:</label>
+            <input type="text" [(ngModel)]="bankDetails">
+          </div>
+          <button (click)="nextStep()">Continue</button>
+        </div>
+      
+        <div *ngIf="currentStep === 3">
+          <!-- Review Step -->
+          <h2>Step 3: Review</h2>
+          <div>
+            <p>Recipient Name: {{ recipientName }}</p>
+            <p>Email: {{ email }}</p>
+            <p>Bank Details: {{ bankDetails }}</p>
+          </div>
+          <button (click)="nextStep()">Continue</button>
+        </div>
+      
+        <div *ngIf="currentStep === 4">
+          <!-- Pay Step -->
+          <h2>Step 4: Pay</h2>
+          <p>Payment form goes here...</p>
+
+        </div>
+      </div>
+      
+      
+  </div>
+  

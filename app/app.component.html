@@ -1,0 +1,15 @@
+<!-- <div class="container">
+  <h1>Forex Services Website</h1>
+  <button (click)="showLoginPage()">Login</button>
+  <button (click)="showSignupPage()">Sign Up</button>
+  <router-outlet></router-outlet>
+</div> -->
+
+
+<nav>
+  <a routerLink="/" routerLinkActive="active">Home</a>
+  <a *ngIf="!isLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
+  <a *ngIf="!isLoggedIn()" routerLink="/signup" routerLinkActive="active">Sign Up</a>
+</nav>
+<router-outlet></router-outlet>
+
