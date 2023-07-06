@@ -8,57 +8,134 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-
-   isInternationalTransfer: boolean = true;
-    isSameCurrencyTransfer: boolean = false;
-    
-  currentStep = 1;
-  isInternational = false;
-  isSameCurrency = false;
-
-  fromCountry!: string;
-  toCountry!: string;
-  totalAmount!: number;
-  amount!: number;
-
-  recipientName!: string;
+  name!: string;
   email!: string;
-  bankDetails!: string;
+  accountNumber!: string;
+  ifscCode!: string;
+  accountType!: string;
+  country!: string;
+  city!: string;
+  address!: string;
+  postalCode!: string;
+  recipientName: any;
+  bankDetails: any;
+  recipientType:any;
+  receiveAmount!: number;
+
+  
+  selectRecipientType(type: string) {
+    this.recipientType = type;
+  }
+
+    isRecipientDetailsValid(): boolean {
+      return (
+        this.name !== '' &&
+        this.email !== '' &&
+        this.accountNumber !== '' &&
+        this.ifscCode !== '' &&
+        this.accountType !== '' &&
+        this.country !== '' &&
+        this.city !== '' &&
+        this.address !== '' &&
+        this.postalCode !== ''
+      );
+    }
+
+isInternationalTransfer: boolean = true;
+isSameCurrencyTransfer: boolean = false;
+  
+currentStep = 1;
+isInternational = false;
+isSameCurrency = false;
+
+
+totalAmount!: number;
+amount!: number;
+
+transferType: string = 'international';
+
+sendAmount: number | null = 10000; // Set the default value for sendAmount
+fromCountry: string = 'INR'; // Set the default value for fromCountry
+toCountry: string = 'USD'; // Set the default value for toCountry
+
+ 
+  exchangeRates: { [key: string]: number } = {
+    USD: 1,
+    INR: 80,  // USD to INR
+    GBP: 0.9, // USD to GBP
+    EUR: 0.8, // USD to EUR
+    AUD: 1.2  // USD to AUD
+  };
+
   fromAmount: any;
-  fromCurrency: any;
-  toAmount: any;
-  toCurrency: any;
-  country: any;
+
   
-   
-    calculateAmount() {
-      // Implement the logic to calculate the converted amount based on the exchange rate
-      // You can use an API or a predefined exchange rate mapping
-      // Update the 'toAmount' based on the calculation
-    }
-  
-    isValidAmountStep(): boolean {
-      if (this.isInternationalTransfer) {
-        return this.fromAmount && this.fromCurrency && this.toAmount && this.toCurrency;
-      } else if (this.isSameCurrencyTransfer) {
-        return this.amount && this.country;
-      }
-      return false;
-    }
-  
-  
+selectTransferType(type: string) {
+  this.transferType = type;
+}
+// calculateReceiveAmount() {
+//   let bankTransferFee = 0;
+//   let ourFee = 2000;
+//   let exchangeRate = 80;
+
+//   if (this.fromCountry === 'USD' && this.toCountry === 'INR') {
+//     exchangeRate = 80;
+//   } else if (this.fromCountry === 'INR' && this.toCountry === 'USD') {
+//     exchangeRate = 1 / 80;
+//   }
+
+//   this.receiveAmount = (this.sendAmount! - (bankTransferFee + ourFee)) * exchangeRate;
+// }
+
+
+getBankTransferFee(): string {
+  return '0'; // Replace with actual logic to get the bank transfer fee
+}
+
+getOurFee(): string {
+  const ourFee = this.sendAmount! * 0.1; // Calculate our fee as 10% of the send amount
+  return ourFee.toString();
+}
+
+getTotalFees(): string {
+  const bankTransferFee = parseInt(this.getBankTransferFee(), 10);
+  const ourFee = parseInt(this.getOurFee(), 10);
+  const totalFees = bankTransferFee + ourFee;
+  return totalFees.toString();
+}
+
+
+getTotalAmountConvert(): string {
+  const bankTransferFee = parseInt(this.getBankTransferFee(), 10);
+  const ourFee = parseInt(this.getOurFee(), 10);
+  const totalFees = this.sendAmount! - (bankTransferFee + ourFee);
+  return totalFees.toString();  
+}
 
 
 
-  selectTransferType(transferType: string) {
-    if (transferType === 'international') {
-      this.isInternationalTransfer = true;
-      this.isSameCurrencyTransfer = false;
-    } else if (transferType === 'sameCurrency') {
-      this.isInternationalTransfer = false;
-      this.isSameCurrencyTransfer = true;
+  calculateReceiveAmount(): number | null {
+    if (this.sendAmount && this.fromCountry && this.toCountry) {
+      const fromExchangeRate = this.exchangeRates[this.fromCountry];
+      const toExchangeRate = this.exchangeRates[this.toCountry];
+      return ((this.sendAmount! - (this.sendAmount! * 0.1 ))/fromExchangeRate ) * toExchangeRate;
+    } else {
+      return null;
     }
   }
+
+
+
+    // isValidAmountStep(): boolean {
+    //   if (this.isInternationalTransfer) {
+    //     return this.fromAmount && this.fromCurrency && this.toAmount && this.toCurrency;
+    //   } else if (this.isSameCurrencyTransfer) {
+    //     return this.amount && this.country;
+    //   }
+    //   return false;
+    // }
+  
+
 
   nextStep() {
     if (this.currentStep < 4) {
@@ -76,12 +153,34 @@ export class HomeComponent {
       };
       console.log("saved data");
       localStorage.setItem('formData', JSON.stringify(formData));
+
+
+     
+        if (this.recipientType === 'myself') {
+          // Navigate to Myself form page
+          this.router.navigate(['/myself']);
+        } else if (this.recipientType === 'recipient') {
+          // Navigate to Recipient form page
+          this.router.navigate(['/recipient']);
+        } else if (this.recipientType === 'business') {
+          // Navigate to Business form page
+          this.router.navigate(['/business']);
+        
+      }
     }
-  }
+    
+    
+    
+    }
+  
 
 
 
 constructor(private router: Router) {}
+
+navigateToFormPage(page: string) {
+  this.router.navigate([page]);
+}
 
   logout() {
     // Remove the user details from local storage or perform any cleanup tasks
@@ -89,5 +188,12 @@ constructor(private router: Router) {}
     localStorage.removeItem('currentUser');
     this.router.navigate(['/']);
   }
+
+//   fromCountry!: string;
+// sendAmount!: number;
+// currentStep!: number;
+
+
+
 }
 
